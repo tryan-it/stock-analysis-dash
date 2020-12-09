@@ -38,6 +38,8 @@ class StockData:
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 title = 'Stock Analysis'
+symbols = pd.read_csv('nasdaq100.csv', header=0, names=['value', 'label'])
+
 
 # Define Subplot
 '''
@@ -61,11 +63,7 @@ app.layout = html.Div(children=[
                     html.P('Choose Stock:'),
                     dcc.Dropdown(
                         id = 'stock-input',
-                        options=[
-                            {'label': 'Tesla', 'value': 'TSLA'},
-                            {'label': 'IBM', 'value': 'IBM'},
-                            {'label': 'Apple', 'value': 'AAPL'},
-                        ],
+                        options=[{'label': x, 'value':y} for y, x in symbols.values],
                         value='TSLA'
                         #labelStyle={'display': 'inline-block'}
                     ),
